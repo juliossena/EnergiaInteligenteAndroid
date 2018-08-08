@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Energia Inteligente</string>
+    <string name="entrar">entrar</string>
+    <string name="esqueci_minha_senha">Esqueci Minha Senha</string>
+    <string name="voltar">voltar</string>
+    <string name="recuperar_senha">Recuperar senha</string>
+</resources>
