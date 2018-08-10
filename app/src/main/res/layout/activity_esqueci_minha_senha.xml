@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_esqueci_minha_senha_relative_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_app"
@@ -45,10 +46,10 @@
             android:background="@drawable/edit_text_arredondado"
             android:drawableRight="@drawable/icon_password"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:hint="CPF"
+            android:inputType="number"
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
-            android:text="CPF"
             android:textColor="#A2BFAC"
             android:textSize="14sp" />
 
