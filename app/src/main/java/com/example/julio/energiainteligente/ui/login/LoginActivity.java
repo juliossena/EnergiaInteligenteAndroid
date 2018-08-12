@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.julio.energiainteligente.R;
+import com.example.julio.energiainteligente.ui.home.HomeActivity;
 import com.example.julio.energiainteligente.ui.util.AlertMessage;
 import com.example.julio.energiainteligente.ui.util.HideKeyboard;
 import com.example.julio.energiainteligente.util.Constants;
@@ -40,7 +41,8 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if (edtEmail.getText().toString().length() > 0 && edtSenha.getText().toString().length() > 0) {
-
+                    startActivity(new Intent(getBaseContext(), HomeActivity.class));
+                    finish();
                 } else {
                     AlertMessage.showMessage(LoginActivity.this, Constants.preencherCampos, Constants.atencao);
                 }
