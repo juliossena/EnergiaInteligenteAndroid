@@ -6,33 +6,38 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.julio.energiainteligente.R;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AtualFragment extends Fragment {
+public class AtualFragment extends Fragment implements OnChartValueSelectedListener{
 
-    private static String TAG = "AtualFragment";
-
-    private float[] yData = {25.3f, 10.6f, 66.76f, 44.32f, 46.01f, 16.89f, 23.9f};
-    private String[] xData = {"Mitch", "Jessica" , "Mohammad" , "Kelsey", "Sam", "Robert", "Ashley"};
-    PieChart pieChart;
+    private LineChart mChart;
 
     public AtualFragment() {
         // Required empty public constructor
@@ -46,92 +51,152 @@ public class AtualFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_atual, container, false);
 
-        Log.d(TAG, "onCreate: starting to create chart");
+        mChart = view.findViewById(R.id.chart1);
+        mChart.setOnChartValueSelectedListener(this);
+        mChart.setDrawGridBackground(false);
+        mChart.getDescription().setEnabled(false);
 
-        pieChart = (PieChart) view.findViewById(R.id.pie_chart);
+        // add an empty data object
+        mChart.setData(new LineData());
+//        mChart.getXAxis().setDrawLabels(false);
+//        mChart.getXAxis().setDrawGridLines(false);
 
- //       pieChart.setDescription(new Description());
-//        pieChart.setRotationEnabled(true);
-        //pieChart.setUsePercentValues(true);
-        //pieChart.setHoleColor(Color.BLUE);
-        //pieChart.setCenterTextColor(Color.BLACK);
-        pieChart.setHoleRadius(25f);
-        pieChart.setTransparentCircleAlpha(0);
-//        pieChart.setCenterText("Super Cool Chart");
-        pieChart.setCenterTextSize(10);
-        //pieChart.setDrawEntryLabels(true);
-        //pieChart.setEntryLabelTextSize(20);
-        //More options just check out the documentation!
+        mChart.invalidate();
 
-        addDataSet();
 
-        pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+        Button adicionar = (Button) view.findViewById(R.id.adicionar);
+        adicionar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                Log.d(TAG, "onValueSelected: Value select from chart.");
-                Log.d(TAG, "onValueSelected: " + e.toString());
-                Log.d(TAG, "onValueSelected: " + h.toString());
-
-                int pos1 = e.toString().indexOf("(sum): ");
-                String sales = e.toString().substring(pos1 + 7);
-
-                for(int i = 0; i < yData.length; i++){
-                    if(yData[i] == Float.parseFloat(sales)){
-                        pos1 = i;
-                        break;
-                    }
-                }
-                String employee = xData[pos1 + 1];
-            }
-
-            @Override
-            public void onNothingSelected() {
-
+            public void onClick(View view) {
+                addEntry();
             }
         });
 
         return view;
     }
 
-    private void addDataSet() {
-        Log.d(TAG, "addDataSet started");
-        ArrayList<PieEntry> yEntrys = new ArrayList<>();
-        ArrayList<String> xEntrys = new ArrayList<>();
+    int[] mColors = ColorTemplate.VORDIPLOM_COLORS;
 
-        for(int i = 0; i < yData.length; i++){
-            yEntrys.add(new PieEntry(yData[i] , i));
+    private void addEntry() {
+
+        LineData data = mChart.getData();
+
+        ILineDataSet set = data.getDataSetByIndex(0);
+        // set.addEntry(...); // can be called as well
+
+        if (set == null) {
+            set = createSet();
+            data.addDataSet(set);
         }
 
-        for(int i = 1; i < xData.length; i++){
-            xEntrys.add(xData[i]);
-        }
+        // choose a random dataSet
+        int randomDataSetIndex = (int) (Math.random() * data.getDataSetCount());
+        float yValue = (float) (Math.random() * 10) + 50f;
 
-        //create the data set
-        PieDataSet pieDataSet = new PieDataSet(yEntrys, "Employee Sales");
-        pieDataSet.setSliceSpace(2);
-        pieDataSet.setValueTextSize(12);
+        data.addEntry(new Entry(data.getDataSetByIndex(randomDataSetIndex).getEntryCount(), yValue), randomDataSetIndex);
+        data.notifyDataChanged();
 
-        //add colors to dataset
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.GRAY);
-        colors.add(Color.BLUE);
-        colors.add(Color.RED);
-        colors.add(Color.GREEN);
-        colors.add(Color.CYAN);
-        colors.add(Color.YELLOW);
-        colors.add(Color.MAGENTA);
+        // let the chart know it's data has changed
+        mChart.notifyDataSetChanged();
 
-        pieDataSet.setColors(colors);
+        mChart.setVisibleXRangeMaximum(6);
+        //mChart.setVisibleYRangeMaximum(15, AxisDependency.LEFT);
+//
+//            // this automatically refreshes the chart (calls invalidate())
+        mChart.moveViewTo(data.getEntryCount() - 7, 50f, YAxis.AxisDependency.LEFT);
 
-        //add legend to chart
-        Legend legend = pieChart.getLegend();
-        legend.setForm(Legend.LegendForm.CIRCLE);
-        legend.setPosition(Legend.LegendPosition.LEFT_OF_CHART);
-
-        //create pie data object
-        PieData pieData = new PieData(pieDataSet);
-        pieChart.setData(pieData);
-        pieChart.invalidate();
     }
+
+    private void addDataSet() {
+
+        LineData data = mChart.getData();
+
+        if (data != null) {
+
+            int count = (data.getDataSetCount() + 1);
+
+            ArrayList<Entry> yVals = new ArrayList<Entry>();
+
+            for (int i = 0; i < data.getEntryCount(); i++) {
+                yVals.add(new Entry(i, (float) (Math.random() * 50f) + 50f * count));
+            }
+
+            LineDataSet set = new LineDataSet(yVals, "DataSet " + count);
+            set.setLineWidth(2.5f);
+            set.setCircleRadius(4.5f);
+
+            int color = mColors[count % mColors.length];
+
+            set.setColor(color);
+            set.setCircleColor(color);
+            set.setHighLightColor(color);
+            set.setValueTextSize(10f);
+            set.setValueTextColor(color);
+
+            data.addDataSet(set);
+            data.notifyDataChanged();
+            mChart.notifyDataSetChanged();
+            mChart.invalidate();
+        }
+    }
+
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+
+    }
+
+    @Override
+    public void onNothingSelected() {
+
+    }
+
+    /*@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.actionAddEntry:
+                addEntry();
+                Toast.makeText(this, "Entry added!", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.actionRemoveEntry:
+                removeLastEntry();
+                Toast.makeText(this, "Entry removed!", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.actionAddDataSet:
+                addDataSet();
+                Toast.makeText(this, "DataSet added!", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.actionRemoveDataSet:
+                removeDataSet();
+                Toast.makeText(this, "DataSet removed!", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.actionAddEmptyLineData:
+                mChart.setData(new LineData());
+                mChart.invalidate();
+                Toast.makeText(this, "Empty data added!", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.actionClear:
+                mChart.clear();
+                Toast.makeText(this, "Chart cleared!", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        return true;
+    }*/
+
+    private LineDataSet createSet() {
+
+        LineDataSet set = new LineDataSet(null, "DataSet 1");
+        set.setLineWidth(2.5f);
+        set.setCircleRadius(4.5f);
+        set.setColor(Color.rgb(240, 99, 99));
+        set.setCircleColor(Color.rgb(240, 99, 99));
+        set.setHighLightColor(Color.rgb(190, 190, 190));
+        set.setAxisDependency(YAxis.AxisDependency.LEFT);
+        set.setValueTextSize(10f);
+
+        return set;
+    }
+
 
 }

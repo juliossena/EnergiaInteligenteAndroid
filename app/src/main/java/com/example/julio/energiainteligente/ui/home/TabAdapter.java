@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.julio.energiainteligente.ui.home.atual.AtualFragment;
+import com.example.julio.energiainteligente.ui.home.dispositivos.DispositivoFragment;
 import com.example.julio.energiainteligente.ui.home.historico.HistoricoFragment;
 
 public class TabAdapter extends FragmentStatePagerAdapter{
@@ -27,7 +28,7 @@ public class TabAdapter extends FragmentStatePagerAdapter{
                 fragment = new HistoricoFragment();
                 break;
             case 2:
-                fragment = new AtualFragment();
+                fragment = new DispositivoFragment();
                 break;
             default:
                 fragment = new AtualFragment();

@@ -6,4 +6,6 @@
     <color name="branco">#ffffff</color>
     <color name="verde_claro">#A2BFAC</color>
     <color name="verde_escuro">#253E2C</color>
+    <color name="vermelho_escuro">#870102</color>
+    <color name="vermelho_claro">#F2797E</color>
 </resources>
