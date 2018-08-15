@@ -41,7 +41,7 @@ public class EsqueciMinhaSenhaActivity extends Activity {
                 if (edtEmail.getText().toString().length() > 0 && edtCpf.getText().toString().length() > 0) {
 
                 } else {
-                    AlertMessage.showMessage(EsqueciMinhaSenhaActivity.this, Constants.preencherCampos, Constants.atencao);
+                    AlertMessage.showMessage(EsqueciMinhaSenhaActivity.this, Constants.Alert.preencherCampos, Constants.Alert.atencao);
                 }
             }
         });

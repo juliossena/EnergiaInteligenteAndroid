@@ -1,4 +1,6 @@
 package com.example.julio.energiainteligente.models;
 
-public class Programacao {
+import java.io.Serializable;
+
+public class Programacao implements Serializable{
 }

@@ -41,9 +41,9 @@ public class HomeActivity extends AppCompatActivity {
 
         slidingTabLayout.setViewPager(viewPager);
 
-        /*toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Energia Inteligentes");
-        setSupportActionBar(toolbar);*/
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Energia Inteligente");
+        setSupportActionBar(toolbar);
     }
 
     @Override

@@ -44,7 +44,7 @@ public class LoginActivity extends Activity {
                     startActivity(new Intent(getBaseContext(), HomeActivity.class));
                     finish();
                 } else {
-                    AlertMessage.showMessage(LoginActivity.this, Constants.preencherCampos, Constants.atencao);
+                    AlertMessage.showMessage(LoginActivity.this, Constants.Alert.preencherCampos, Constants.Alert.atencao);
                 }
             }
         });

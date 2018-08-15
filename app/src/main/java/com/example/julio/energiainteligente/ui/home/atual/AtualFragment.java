@@ -3,6 +3,7 @@ package com.example.julio.energiainteligente.ui.home.atual;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,9 +33,6 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class AtualFragment extends Fragment implements OnChartValueSelectedListener{
 
     private LineChart mChart;
@@ -63,14 +61,7 @@ public class AtualFragment extends Fragment implements OnChartValueSelectedListe
 
         mChart.invalidate();
 
-
-        Button adicionar = (Button) view.findViewById(R.id.adicionar);
-        adicionar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addEntry();
-            }
-        });
+        addEntry();
 
         return view;
     }
@@ -105,6 +96,12 @@ public class AtualFragment extends Fragment implements OnChartValueSelectedListe
 //            // this automatically refreshes the chart (calls invalidate())
         mChart.moveViewTo(data.getEntryCount() - 7, 50f, YAxis.AxisDependency.LEFT);
 
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                addEntry();
+            }
+        }, 1000);
     }
 
     private void addDataSet() {

@@ -1,18 +1,20 @@
 package com.example.julio.energiainteligente.ui.home.dispositivos;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.julio.energiainteligente.R;
-import com.example.julio.energiainteligente.helper.SlidingTabLayout;
 import com.example.julio.energiainteligente.models.Dispositivo;
 import com.example.julio.energiainteligente.models.Programacao;
+import com.example.julio.energiainteligente.util.Constants;
 
 import java.util.ArrayList;
 
@@ -31,7 +33,7 @@ public class DispositivoFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dispositivo, container, false);
@@ -67,7 +69,15 @@ public class DispositivoFragment extends Fragment {
 
         tabela.setAdapter(dispositivoAdapter);
 
+        tabela.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(inflater.getContext(), EditarDispositivoActivity.class);
+                intent.putExtra(Constants.Cache.passarDispositivo, listaDispositivos.get(i));
 
+                startActivity(intent);
+            }
+        });
 
 
         return view;

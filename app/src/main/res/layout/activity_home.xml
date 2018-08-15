@@ -8,9 +8,9 @@
     android:orientation="vertical"
     tools:context=".ui.home.HomeActivity">
 
-    <!--<include
+    <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>-->
+        layout="@layout/toolbar"/>
 
     <com.example.julio.energiainteligente.helper.SlidingTabLayout
         android:id="@+id/stl_tabs"

@@ -1,8 +1,9 @@
 package com.example.julio.energiainteligente.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Dispositivo {
+public class Dispositivo implements Serializable{
     private Integer id;
     private String nome;
     private Boolean ligado;

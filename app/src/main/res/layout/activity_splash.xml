@@ -12,5 +12,7 @@
         android:layout_width="192dp"
         android:layout_height="166dp"
         android:layout_centerInParent="true"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logo"
+        android:contentDescription="TODO" />
+
 </RelativeLayout>

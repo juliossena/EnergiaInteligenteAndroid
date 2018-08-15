@@ -106,6 +106,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:text="Consumo Total"
+                        android:textColor="@color/colorPrimary"
                         android:textStyle="bold" />
 
                     <TextView
@@ -114,6 +115,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:text="Tempo Ligado"
+                        android:textColor="@color/colorPrimary"
                         android:textStyle="bold" />
 
                     <TextView
@@ -122,6 +124,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:text="Tempo Desligado"
+                        android:textColor="@color/colorPrimary"
                         android:textStyle="bold" />
 
                     <TextView
@@ -130,6 +133,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:text="Média de consumo"
+                        android:textColor="@color/colorPrimary"
                         android:textStyle="bold" />
 
                     <TextView
@@ -138,6 +142,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:text="Horário de Pico"
+                        android:textColor="@color/colorPrimary"
                         android:textStyle="bold" />
 
                     <TextView
@@ -146,6 +151,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:text="Consumo de Pico"
+                        android:textColor="@color/colorPrimary"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -159,37 +165,43 @@
                         android:id="@+id/textView4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textColor="@color/colorPrimary" />
 
                     <TextView
                         android:id="@+id/textView14"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textColor="@color/colorPrimary" />
 
                     <TextView
                         android:id="@+id/textView13"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textColor="@color/colorPrimary" />
 
                     <TextView
                         android:id="@+id/textView12"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textColor="@color/colorPrimary" />
 
                     <TextView
                         android:id="@+id/textView11"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textColor="@color/colorPrimary" />
 
                     <TextView
                         android:id="@+id/textView10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textColor="@color/colorPrimary" />
                 </LinearLayout>
 
             </LinearLayout>
