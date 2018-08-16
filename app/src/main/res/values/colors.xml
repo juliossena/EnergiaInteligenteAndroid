@@ -4,8 +4,9 @@
     <color name="colorPrimaryDark">#253e2c</color>
     <color name="colorAccent">#253e2c</color>
     <color name="branco">#ffffff</color>
-    <color name="verde_claro">#A2BFAC</color>
+    <color name="verde_claro">#a2bfac</color>
     <color name="verde_escuro">#253e2c</color>
     <color name="vermelho_escuro">#870102</color>
     <color name="vermelho_claro">#F2797E</color>
+    <color name="amarelo">#FFF100</color>
 </resources>

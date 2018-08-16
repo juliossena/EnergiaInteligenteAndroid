@@ -2,12 +2,13 @@ package com.example.julio.energiainteligente.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Dispositivo implements Serializable{
     private Integer id;
     private String nome;
     private Boolean ligado;
-    private ArrayList<Programacao> programacoes = new ArrayList<>();
+    private List<Programacao> programacoes = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -33,11 +34,11 @@ public class Dispositivo implements Serializable{
         this.ligado = ligado;
     }
 
-    public ArrayList<Programacao> getProgramacoes() {
+    public List<Programacao> getProgramacoes() {
         return programacoes;
     }
 
-    public void setProgramacoes(ArrayList<Programacao> programacoes) {
+    public void setProgramacoes(List<Programacao> programacoes) {
         this.programacoes = programacoes;
     }
 

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_app"
+    tools:context=".ui.home.dispositivos.NovaProgramacaoActivity">
+
+    <include
+        android:id="@+id/activity_nova_programacao_toolbar"
+        layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/activity_nova_programacao_nome"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/edit_text_arredondado"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Nome da Programação"
+            android:inputType="textPersonName"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tipo de programação:"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <RadioButton
+                    android:id="@+id/activity_nova_programacao_horario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Horário"
+                    android:textAllCaps="true" />
+
+                <RadioButton
+                    android:id="@+id/activity_nova_programacao_proximidade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Proximidade"
+                    android:textAllCaps="true" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/activity_nova_programacao_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/edit_text_arredondado"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="21/08/2018 22:11:00"
+            android:inputType="number"
+            android:textSize="14sp"
+            android:visibility="invisible" />
+
+        <LinearLayout
+            android:id="@+id/activity_nova_programacao_linear_distancia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="invisible">
+
+            <SeekBar
+                android:id="@+id/activity_nova_programacao_distancia_seek"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="8dp"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/tvYMax"
+                android:max="5000"
+                android:paddingBottom="12dp" />
+
+            <TextView
+                android:id="@+id/activity_nova_programacao_distancia_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0m"
+                android:textColor="@color/colorPrimary" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Repetir:"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/activity_nova_programacao_segunda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Segunda-feira" />
+
+                <CheckBox
+                    android:id="@+id/activity_nova_programacao_terca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Terça-feira" />
+
+                <CheckBox
+                    android:id="@+id/activity_nova_programacao_quarta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Quarta-feira" />
+
+                <CheckBox
+                    android:id="@+id/activity_nova_programacao_quinta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Quinta-feira" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/activity_nova_programacao_sexta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sexta-feira" />
+
+                <CheckBox
+                    android:id="@+id/activity_nova_programacao_sabado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sábado" />
+
+                <CheckBox
+                    android:id="@+id/activity_nova_programacao_domingo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Domingo" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RadioButton
+                android:id="@+id/activity_nova_programacao_ligar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ligar Dispositivo" />
+
+            <RadioButton
+                android:id="@+id/activity_nova_programacao_desligar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Desligar Dispositivo" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/activity_nova_programacao_salvar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/botao_arredondado_verde"
+            android:text="@string/Salvar" />
+
+    </LinearLayout>
+
+</RelativeLayout>

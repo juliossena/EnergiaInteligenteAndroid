@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_editar_dispositivo_relative_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_app"
@@ -18,7 +19,7 @@
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="151dp"
+        android:layout_marginTop="183dp"
         android:background="@drawable/botao_arredondado"
         android:text="@string/Salvar"
         android:textColor="@android:color/background_light" />
@@ -31,9 +32,11 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="15dp"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/botao_redondo_verde"
+        android:background="@drawable/botao_redondo_vermelho"
         android:drawableStart="@drawable/ic_control_point"
-        android:gravity="center_vertical|center_horizontal|center" />
+        android:elevation="10dp"
+        android:gravity="center_vertical|center_horizontal|center"
+        android:padding="12dp" />
 
     <EditText
         android:id="@+id/activity_editar_dispositivo_nome"
@@ -46,15 +49,25 @@
         android:ems="10"
         android:gravity="center"
         android:inputType="textPersonName"
-        android:textColor="@color/colorPrimary" />
+        android:textColor="@color/verde_claro" />
 
     <ListView
         android:id="@+id/activity_editar_dispositivo_programacoes"
         android:layout_width="match_parent"
-        android:layout_height="356dp"
+        android:layout_height="330dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="211dp" />
+        android:layout_marginTop="237dp" />
+
+    <Switch
+        android:id="@+id/activity_editar_dispositivo_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="147dp"
+        android:text="Desligado: "
+        android:textColor="@color/colorPrimary" />
 
 
 </RelativeLayout>
