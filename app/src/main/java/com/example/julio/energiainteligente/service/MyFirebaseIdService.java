@@ -1,4 +1,4 @@
-package com.example.julio.energiainteligente.Service;
+package com.example.julio.energiainteligente.service;
 
 import com.example.julio.energiainteligente.util.Constants;
 import com.google.firebase.iid.FirebaseInstanceId;

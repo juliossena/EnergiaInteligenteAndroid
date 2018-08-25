@@ -1,6 +1,7 @@
 package com.example.julio.energiainteligente.ui.home;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.example.julio.energiainteligente.R;
 import com.example.julio.energiainteligente.helper.SlidingTabLayout;
 import com.example.julio.energiainteligente.ui.login.LoginActivity;
+import com.example.julio.energiainteligente.util.Constants;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -68,6 +70,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void deslogarUsuario(){
+        SharedPreferences sharedPreferences = HomeActivity.this.getSharedPreferences(Constants.Cache.nomeSalvarAplicativo, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Constants.Cache.salvarAplicativoEmail, "");
+        editor.putString(Constants.Cache.salvarAplicativoSenha, "");
+        editor.commit();
+
+        HomeService.fazerLogoff(HomeActivity.this);
         startActivity(new Intent(getBaseContext(), LoginActivity.class));
         finish();
     }
