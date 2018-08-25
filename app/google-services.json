@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "139421717708",
+    "firebase_url": "https://energiainteligente-69f3b.firebaseio.com",
+    "project_id": "energiainteligente-69f3b",
+    "storage_bucket": "energiainteligente-69f3b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:139421717708:android:8c3745d1bd86893f",
+        "android_client_info": {
+          "package_name": "com.example.julio.energiainteligente"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "139421717708-04tcl0ijl4flvs804gbg2her8hru2hdm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.julio.energiainteligente",
+            "certificate_hash": "fdc3458ee0c1a4c146552235d031e26e60731759"
+          }
+        },
+        {
+          "client_id": "139421717708-8nurb8nfh2k42inn49qtqds8r65irbr5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdrQufT07Yl1rNBLTrdz_WpTCBmTeBmvc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "139421717708-8nurb8nfh2k42inn49qtqds8r65irbr5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

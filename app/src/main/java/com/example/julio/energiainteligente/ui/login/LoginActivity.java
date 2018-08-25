@@ -3,6 +3,7 @@ package com.example.julio.energiainteligente.ui.login;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,8 @@ import com.example.julio.energiainteligente.ui.home.HomeActivity;
 import com.example.julio.energiainteligente.ui.util.AlertMessage;
 import com.example.julio.energiainteligente.ui.util.HideKeyboard;
 import com.example.julio.energiainteligente.util.Constants;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceIdService;
 
 public class LoginActivity extends Activity {
 
@@ -29,6 +32,9 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
 
         findId();
+
+        Constants.Session.tokenFirebase = FirebaseInstanceId.getInstance().getToken();
+        Log.i("token firebase", Constants.Session.tokenFirebase);
 
         esqueciMinhaSenha.setOnClickListener(new View.OnClickListener() {
             @Override

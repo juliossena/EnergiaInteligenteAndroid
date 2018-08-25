@@ -19,5 +19,6 @@ public class Constants {
         public static String tokenAcesso = "";
         public static String senhaAcesso = "";
         public static String emailAcesso = "";
+        public static String tokenFirebase = "";
     }
 }
