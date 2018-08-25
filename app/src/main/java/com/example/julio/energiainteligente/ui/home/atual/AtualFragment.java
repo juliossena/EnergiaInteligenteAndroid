@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.julio.energiainteligente.R;
+import com.example.julio.energiainteligente.models.Dispositivo;
+import com.example.julio.energiainteligente.models.Medicao;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -32,20 +34,20 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class AtualFragment extends Fragment implements OnChartValueSelectedListener{
+public class AtualFragment extends Fragment implements OnChartValueSelectedListener {
 
-    private LineChart mChart;
+    private static LineChart mChart;
 
     public AtualFragment() {
-        // Required empty public constructor
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_atual, container, false);
 
@@ -54,87 +56,99 @@ public class AtualFragment extends Fragment implements OnChartValueSelectedListe
         mChart.setDrawGridBackground(false);
         mChart.getDescription().setEnabled(false);
 
-        // add an empty data object
         mChart.setData(new LineData());
-//        mChart.getXAxis().setDrawLabels(false);
-//        mChart.getXAxis().setDrawGridLines(false);
 
         mChart.invalidate();
 
-        addEntry();
+        AtualService.listarMedicoes();
 
         return view;
     }
 
-    int[] mColors = ColorTemplate.VORDIPLOM_COLORS;
+    static int[] mColors = ColorTemplate.COLORFUL_COLORS;
 
-    private void addEntry() {
+    public static void addCircuito(int count, Dispositivo dispositivo, LineData data) {
+        ArrayList<Entry> yVals = new ArrayList<Entry>();
 
-        LineData data = mChart.getData();
+        yVals.add(new Entry(count, dispositivo.getMedicoes().get(0).getPotencia()));
 
-        ILineDataSet set = data.getDataSetByIndex(0);
-        // set.addEntry(...); // can be called as well
+        LineDataSet setMult = new LineDataSet(yVals, dispositivo.getNome());
+        setMult.setLineWidth(2.5f);
+        setMult.setCircleRadius(4.5f);
 
-        if (set == null) {
-            set = createSet();
-            data.addDataSet(set);
-        }
+        int color = mColors[count % mColors.length];
+
+        setMult.setColor(color);
+        setMult.setCircleColor(color);
+        setMult.setHighLightColor(color);
+        setMult.setValueTextSize(10f);
+        setMult.setValueTextColor(color);
+
+        data.addDataSet(setMult);
+        data.notifyDataChanged();
+    }
+
+    public static void addDadosCircuito(LineData data, int count, Dispositivo dispositivo) {
+        data = mChart.getData();
 
         // choose a random dataSet
-        int randomDataSetIndex = (int) (Math.random() * data.getDataSetCount());
-        float yValue = (float) (Math.random() * 10) + 50f;
+        float yValue = (float) dispositivo.getMedicoes().get(0).getPotencia();
 
-        data.addEntry(new Entry(data.getDataSetByIndex(randomDataSetIndex).getEntryCount(), yValue), randomDataSetIndex);
+        data.addEntry(new Entry(data.getDataSetByIndex(count).getEntryCount(), yValue), count);
         data.notifyDataChanged();
 
-        // let the chart know it's data has changed
         mChart.notifyDataSetChanged();
+        mChart.setVisibleXRangeMaximum(10);
+    }
 
-        mChart.setVisibleXRangeMaximum(6);
-        //mChart.setVisibleYRangeMaximum(15, AxisDependency.LEFT);
-//
-//            // this automatically refreshes the chart (calls invalidate())
-        mChart.moveViewTo(data.getEntryCount() - 7, 50f, YAxis.AxisDependency.LEFT);
+    public static void addEntry(List<Dispositivo> dispositivos) {
+
+        LineData data = mChart.getData();
+        int count = 0;
+        if (data.getDataSetCount() < dispositivos.size()) {
+            Medicao medicao = new Medicao();
+            medicao.setPotencia((float) 0.0);
+            for (Dispositivo dispositivo : dispositivos) {
+                medicao.setPotencia(medicao.getPotencia() + dispositivo.getMedicoes().get(0).getPotencia());
+                addCircuito(count, dispositivo, data);
+                count++;
+            }
+
+            Dispositivo todosDispositivos = new Dispositivo();
+            todosDispositivos.setNome("Todos");
+            List<Medicao> medicoes = new ArrayList<>();
+            medicoes.add(medicao);
+            todosDispositivos.setMedicoes(medicoes);
+
+            addCircuito(count, todosDispositivos, data);
+
+        } else {
+            Medicao medicao = new Medicao();
+            medicao.setPotencia((float) 0.0);
+            for (Dispositivo dispositivo : dispositivos) {
+                medicao.setPotencia(medicao.getPotencia() + dispositivo.getMedicoes().get(0).getPotencia());
+                addDadosCircuito(data, count, dispositivo);
+
+                count++;
+            }
+
+            Dispositivo todosDispositivos = new Dispositivo();
+            todosDispositivos.setNome("Todos");
+            List<Medicao> medicoes = new ArrayList<>();
+            medicoes.add(medicao);
+            todosDispositivos.setMedicoes(medicoes);
+
+            addDadosCircuito(data, count, todosDispositivos);
+
+            mChart.moveViewTo(data.getEntryCount() - 7, 50f, YAxis.AxisDependency.LEFT);
+        }
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                addEntry();
+                AtualService.listarMedicoes();
             }
         }, 1000);
-    }
-
-    private void addDataSet() {
-
-        LineData data = mChart.getData();
-
-        if (data != null) {
-
-            int count = (data.getDataSetCount() + 1);
-
-            ArrayList<Entry> yVals = new ArrayList<Entry>();
-
-            for (int i = 0; i < data.getEntryCount(); i++) {
-                yVals.add(new Entry(i, (float) (Math.random() * 50f) + 50f * count));
-            }
-
-            LineDataSet set = new LineDataSet(yVals, "DataSet " + count);
-            set.setLineWidth(2.5f);
-            set.setCircleRadius(4.5f);
-
-            int color = mColors[count % mColors.length];
-
-            set.setColor(color);
-            set.setCircleColor(color);
-            set.setHighLightColor(color);
-            set.setValueTextSize(10f);
-            set.setValueTextColor(color);
-
-            data.addDataSet(set);
-            data.notifyDataChanged();
-            mChart.notifyDataSetChanged();
-            mChart.invalidate();
-        }
     }
 
     @Override
@@ -146,54 +160,5 @@ public class AtualFragment extends Fragment implements OnChartValueSelectedListe
     public void onNothingSelected() {
 
     }
-
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.actionAddEntry:
-                addEntry();
-                Toast.makeText(this, "Entry added!", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.actionRemoveEntry:
-                removeLastEntry();
-                Toast.makeText(this, "Entry removed!", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.actionAddDataSet:
-                addDataSet();
-                Toast.makeText(this, "DataSet added!", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.actionRemoveDataSet:
-                removeDataSet();
-                Toast.makeText(this, "DataSet removed!", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.actionAddEmptyLineData:
-                mChart.setData(new LineData());
-                mChart.invalidate();
-                Toast.makeText(this, "Empty data added!", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.actionClear:
-                mChart.clear();
-                Toast.makeText(this, "Chart cleared!", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
-        return true;
-    }*/
-
-    private LineDataSet createSet() {
-
-        LineDataSet set = new LineDataSet(null, "DataSet 1");
-        set.setLineWidth(2.5f);
-        set.setCircleRadius(4.5f);
-        set.setColor(Color.rgb(240, 99, 99));
-        set.setCircleColor(Color.rgb(240, 99, 99));
-        set.setHighLightColor(Color.rgb(190, 190, 190));
-        set.setAxisDependency(YAxis.AxisDependency.LEFT);
-        set.setValueTextSize(10f);
-
-        return set;
-    }
-
 
 }
