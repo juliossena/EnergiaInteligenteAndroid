@@ -1,7 +1,9 @@
 package com.example.julio.energiainteligente.models;
 
+import com.example.julio.energiainteligente.modelResponse.CircuitoDispositivoResponse;
 import com.example.julio.energiainteligente.modelResponse.CircuitoResponse;
 import com.example.julio.energiainteligente.modelResponse.MedicaoResponse;
+import com.example.julio.energiainteligente.modelResponse.ProgramacaoResponse;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ public class Dispositivo implements Serializable {
     private Boolean ligado;
     private List<Programacao> programacoes = new ArrayList<>();
     private List<Medicao> medicoes = new ArrayList<>();
+    private ConfiguracaoDispositivo configuracaoDispositivo;
 
     public Dispositivo() {
 
@@ -24,12 +27,27 @@ public class Dispositivo implements Serializable {
         this.nome = circuitoResponse.getNome();
         this.ligado = circuitoResponse.isLigado();
         this.programacoes = null;
+        this.configuracaoDispositivo = new ConfiguracaoDispositivo(circuitoResponse.getConfiguracaoCircuito());
 
         List<Medicao> medicoes = new ArrayList<>();
         for (MedicaoResponse medicaoResponse : circuitoResponse.getMedicoes()) {
             medicoes.add(new Medicao(medicaoResponse));
         }
         this.medicoes = medicoes;
+    }
+
+    public Dispositivo(CircuitoDispositivoResponse circuitoResponse) {
+        this.id = circuitoResponse.getId();
+        this.nome = circuitoResponse.getNome();
+        this.ligado = circuitoResponse.isLigado();
+        this.medicoes = null;
+        this.configuracaoDispositivo = new ConfiguracaoDispositivo(circuitoResponse.getConfiguracaoCircuito());
+
+        List<Programacao> programacoes = new ArrayList<>();
+        for (ProgramacaoResponse programacaoResponse : circuitoResponse.getProgramacoes()) {
+            programacoes.add(new Programacao(programacaoResponse));
+        }
+        this.programacoes = programacoes;
     }
 
     public Integer getId() {
@@ -74,5 +92,13 @@ public class Dispositivo implements Serializable {
 
     public void setMedicoes(List<Medicao> medicoes) {
         this.medicoes = medicoes;
+    }
+
+    public ConfiguracaoDispositivo getConfiguracaoDispositivo() {
+        return configuracaoDispositivo;
+    }
+
+    public void setConfiguracaoDispositivo(ConfiguracaoDispositivo configuracaoDispositivo) {
+        this.configuracaoDispositivo = configuracaoDispositivo;
     }
 }

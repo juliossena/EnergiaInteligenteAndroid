@@ -55,7 +55,7 @@ public class DispositivoAdapter extends BaseAdapter {
         LinearLayout caixaIcone = (LinearLayout) viewAdapter.findViewById(R.id.item_dispositivo_adapter_layout_icone);
 
         nomeDispositivo.setText(disp.getNome());
-        qtdDispositivos.setText("PROGRAMAÇÕES: " + dispositivos.size());
+        qtdDispositivos.setText("PROGRAMAÇÕES: " + disp.getProgramacoes().size());
 
         if (disp.getLigado()) {
             icone.setImageResource(R.drawable.ic_assignment_turned_in);

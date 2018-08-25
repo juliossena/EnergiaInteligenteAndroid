@@ -3,14 +3,17 @@ package com.example.julio.energiainteligente.modelResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CircuitoResponse {
+public class CircuitoDispositivoResponse {
 
     @SerializedName("id")
     @Expose
     private Integer id;
+
+    @SerializedName("token")
+    @Expose
+    private String token;
 
     @SerializedName("nome")
     @Expose
@@ -20,17 +23,13 @@ public class CircuitoResponse {
     @Expose
     private boolean ligado;
 
-    @SerializedName("medicoes")
-    @Expose
-    private ArrayList<MedicaoResponse> medicoes;
-
-    @SerializedName("historicoResponse")
-    @Expose
-    private HistoricoResponse historicoResponse;
-
     @SerializedName("configuracaoCircuito")
     @Expose
     private ConfiguracaoCircuitoResponse configuracaoCircuito;
+
+    @SerializedName("programacoes")
+    @Expose
+    private List<ProgramacaoResponse> programacoes;
 
     public Integer getId() {
         return id;
@@ -38,6 +37,14 @@ public class CircuitoResponse {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getNome() {
@@ -56,27 +63,19 @@ public class CircuitoResponse {
         this.ligado = ligado;
     }
 
-    public ArrayList<MedicaoResponse> getMedicoes() {
-        return medicoes;
-    }
-
-    public void setMedicoes(ArrayList<MedicaoResponse> medicoes) {
-        this.medicoes = medicoes;
-    }
-
-    public HistoricoResponse getHistoricoResponse() {
-        return historicoResponse;
-    }
-
-    public void setHistoricoResponse(HistoricoResponse historicoResponse) {
-        this.historicoResponse = historicoResponse;
-    }
-
     public ConfiguracaoCircuitoResponse getConfiguracaoCircuito() {
         return configuracaoCircuito;
     }
 
     public void setConfiguracaoCircuito(ConfiguracaoCircuitoResponse configuracaoCircuito) {
         this.configuracaoCircuito = configuracaoCircuito;
+    }
+
+    public List<ProgramacaoResponse> getProgramacoes() {
+        return programacoes;
+    }
+
+    public void setProgramacoes(List<ProgramacaoResponse> programacoes) {
+        this.programacoes = programacoes;
     }
 }

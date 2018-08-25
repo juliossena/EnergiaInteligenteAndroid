@@ -1,10 +1,21 @@
 package com.example.julio.energiainteligente.models;
 
+import com.example.julio.energiainteligente.modelResponse.ProgramacaoResponse;
+
 import java.io.Serializable;
 
 public class Programacao implements Serializable{
 
     private String nome;
+
+    public Programacao() {
+
+    }
+
+    public Programacao(ProgramacaoResponse programacaoResponse) {
+
+    }
+
 
     public String getNome() {
         return nome;

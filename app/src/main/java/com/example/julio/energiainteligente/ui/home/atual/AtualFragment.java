@@ -39,6 +39,7 @@ import java.util.List;
 public class AtualFragment extends Fragment implements OnChartValueSelectedListener {
 
     private static LineChart mChart;
+    public static int tempoDelay = 30000;
 
     public AtualFragment() {
 
@@ -109,6 +110,12 @@ public class AtualFragment extends Fragment implements OnChartValueSelectedListe
             Medicao medicao = new Medicao();
             medicao.setPotencia((float) 0.0);
             for (Dispositivo dispositivo : dispositivos) {
+                int novoTempo = 1000 * dispositivo.getConfiguracaoDispositivo().getTempoAtualizacao() / 3;
+
+                if (novoTempo < tempoDelay) {
+                    tempoDelay = novoTempo;
+                }
+
                 medicao.setPotencia(medicao.getPotencia() + dispositivo.getMedicoes().get(0).getPotencia());
                 addCircuito(count, dispositivo, data);
                 count++;
@@ -148,7 +155,7 @@ public class AtualFragment extends Fragment implements OnChartValueSelectedListe
             public void run() {
                 AtualService.listarMedicoes();
             }
-        }, 1000);
+        }, tempoDelay);
     }
 
     @Override
