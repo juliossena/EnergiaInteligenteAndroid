@@ -14,11 +14,13 @@ public class Constants {
 
     public static class Alert {
         public static String atencao = "ATENÇÃO!";
+        public static String sucesso = "SUCESSO!";
         public static String preencherCampos = "Preencha todos os campos";
         public static String novaProgramacao = "Nova Programação";
         public static String usuarioSenhaInvalido = "Usuário ou senha inválidos";
         public static String usuarioDeslogado = "Erro na autentificação do usuário, tente refazer o login";
         public static String falhaInternet = "Não foi possível fazer a conexão, confira seu acesso à internet e tente novamente mais tarde";
+        public static String programacaoInserida = "Programação inserida com sucesso!";
     }
 
     public static class Session {

@@ -46,14 +46,24 @@ public class DispositivoFragment extends Fragment {
     private ArrayList<Dispositivo> listaDispositivos = new ArrayList<>();
     private DispositivoAdapter dispositivoAdapter;
     private LayoutInflater inflater;
+    private boolean primeiroAcesso = false;
 
     public DispositivoFragment() {
         // Required empty public constructor
     }
 
     @Override
+    public void onResume() {
+        if (primeiroAcesso) {
+            DispositivoService.listarDispositivos(inflater.getContext(), listaDispositivos, dispositivoAdapter);
+        }
+        super.onResume();
+    }
+
+    @Override
     public void setMenuVisibility(boolean menuVisible) {
         if (menuVisible) {
+            primeiroAcesso = true;
             DispositivoService.listarDispositivos(inflater.getContext(), listaDispositivos, dispositivoAdapter);
         }
 

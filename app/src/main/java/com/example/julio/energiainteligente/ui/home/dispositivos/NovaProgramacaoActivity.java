@@ -13,8 +13,19 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.julio.energiainteligente.R;
+import com.example.julio.energiainteligente.models.Dispositivo;
+import com.example.julio.energiainteligente.models.enuns.DiaSemana;
+import com.example.julio.energiainteligente.models.enuns.TipoEstado;
+import com.example.julio.energiainteligente.models.enuns.TipoProgramacao;
+import com.example.julio.energiainteligente.models.enuns.TipoType;
+import com.example.julio.energiainteligente.models.modelRequest.ProgramacaoMudancaRepetirRequest;
+import com.example.julio.energiainteligente.models.modelRequest.ProgramacaoMudancaRequest;
 import com.example.julio.energiainteligente.ui.util.AlertMessage;
 import com.example.julio.energiainteligente.util.Constants;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class NovaProgramacaoActivity extends AppCompatActivity {
 
@@ -36,6 +47,7 @@ public class NovaProgramacaoActivity extends AppCompatActivity {
     private RadioButton desligarDispositivo;
     private Button salvarProgramacao;
     private LinearLayout layoutDistancia;
+    private Dispositivo dispositivo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +55,8 @@ public class NovaProgramacaoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nova_programacao);
 
         findId();
+
+        dispositivo = (Dispositivo) getIntent().getExtras().get(Constants.Cache.passarDispositivo);
 
         toolbar.setTitle(Constants.Alert.novaProgramacao);
         setSupportActionBar(toolbar);
@@ -97,9 +111,51 @@ public class NovaProgramacaoActivity extends AppCompatActivity {
                     AlertMessage.showMessage(NovaProgramacaoActivity.this, Constants.Alert.preencherCampos, Constants.Alert.atencao);
                 } else {
 
+                    List<ProgramacaoMudancaRepetirRequest> programacaoMudancaRepetirRequest = new ArrayList<>();
+                    setListaSemanaArray(programacaoMudancaRepetirRequest);
+
+                    ProgramacaoMudancaRequest programacaoMudancaRequest =
+                            new ProgramacaoMudancaRequest(
+                                    TipoProgramacao.MUDANCA,
+                                    nome.getText().toString(),
+                                    TipoType.PROGRAMACAO_MUDANCA.getDescricao(),
+                                    programacaoMudancaRepetirRequest.size() > 0,
+                                    ligarDispositivo.isActivated() ? TipoEstado.LIGADO : TipoEstado.DESLIGADO,
+                                    horario.isActivated() ? new Date(horarioProgramacao.getText().toString()) : null,
+                                    proximidade.isActivated() ? Integer.parseInt(distanciaText.getText().toString()) : null,
+                                    programacaoMudancaRepetirRequest
+                            );
+
+                    DispositivoService.inserirProgramacaoMudanca(NovaProgramacaoActivity.this,
+                            programacaoMudancaRequest, dispositivo);
+
                 }
             }
         });
+    }
+
+    private void setListaSemanaArray(List<ProgramacaoMudancaRepetirRequest> programacaoMudancaRepetirRequest) {
+        if (segunda.isChecked()) {
+            programacaoMudancaRepetirRequest.add(new ProgramacaoMudancaRepetirRequest(DiaSemana.SEGUNDA));
+        }
+        if (terca.isChecked()) {
+            programacaoMudancaRepetirRequest.add(new ProgramacaoMudancaRepetirRequest(DiaSemana.TERCA));
+        }
+        if (quarta.isChecked()) {
+            programacaoMudancaRepetirRequest.add(new ProgramacaoMudancaRepetirRequest(DiaSemana.QUARTA));
+        }
+        if (quinta.isChecked()) {
+            programacaoMudancaRepetirRequest.add(new ProgramacaoMudancaRepetirRequest(DiaSemana.QUINTA));
+        }
+        if (sexta.isChecked()) {
+            programacaoMudancaRepetirRequest.add(new ProgramacaoMudancaRepetirRequest(DiaSemana.SEXTA));
+        }
+        if (sabado.isChecked()) {
+            programacaoMudancaRepetirRequest.add(new ProgramacaoMudancaRepetirRequest(DiaSemana.SABADO));
+        }
+        if (domingo.isChecked()) {
+            programacaoMudancaRepetirRequest.add(new ProgramacaoMudancaRepetirRequest(DiaSemana.DOMINGO));
+        }
     }
 
     private void findId() {

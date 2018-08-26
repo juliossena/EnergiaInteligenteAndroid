@@ -66,7 +66,10 @@ public class EditarDispositivoActivity extends AppCompatActivity {
         btnAdicionarProgramacao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getBaseContext(), NovaProgramacaoActivity.class));
+                Intent intent = new Intent(EditarDispositivoActivity.this, NovaProgramacaoActivity.class);
+                intent.putExtra(Constants.Cache.passarDispositivo, dispositivo);
+
+                startActivity(intent);
             }
         });
 
@@ -91,7 +94,9 @@ public class EditarDispositivoActivity extends AppCompatActivity {
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                dispositivo.setNome(nomeDispositivo.getText().toString());
+                dispositivo.setLigado(status.isChecked());
+                DispositivoService.atualizarDispositivo(EditarDispositivoActivity.this, dispositivo);
             }
         });
 
