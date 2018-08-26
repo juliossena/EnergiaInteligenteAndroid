@@ -91,8 +91,6 @@ public class DispositivoFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-
         return view;
     }
 

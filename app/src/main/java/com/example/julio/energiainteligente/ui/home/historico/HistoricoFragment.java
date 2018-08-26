@@ -23,6 +23,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.julio.energiainteligente.R;
+import com.example.julio.energiainteligente.models.Dispositivo;
+import com.example.julio.energiainteligente.models.Historico;
+import com.example.julio.energiainteligente.ui.home.dispositivos.DispositivoService;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -39,7 +42,11 @@ import com.github.mikephil.charting.utils.MPPointF;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,18 +57,8 @@ public class HistoricoFragment extends Fragment  implements SeekBar.OnSeekBarCha
     private PieChart mChart;
     private EditText inicio;
     private EditText termino;
-
-
-    protected String[] mMonths = new String[] {
-            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"
-    };
-
-    protected String[] mParties = new String[] {
-            "Disp 1", "Disp 2", "Disp 3", "Disp 4", "Disp 5", "Party F", "Party G", "Party H",
-            "Party I", "Party J", "Party K", "Party L", "Party M", "Party N", "Party O", "Party P",
-            "Party Q", "Party R", "Party S", "Party T", "Party U", "Party V", "Party W", "Party X",
-            "Party Y", "Party Z"
-    };
+    private LayoutInflater inflater;
+    private List<Dispositivo> dispositivos = new ArrayList<>();
 
     protected Typeface mTfRegular;
     protected Typeface mTfLight;
@@ -75,10 +72,32 @@ public class HistoricoFragment extends Fragment  implements SeekBar.OnSeekBarCha
         // Required empty public constructor
     }
 
+    @Override
+    public void setMenuVisibility(boolean menuVisible) {
+        if (menuVisible) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/aaaa HH:mm:ss");
+
+            Date dataInicio = new Date(new Date().getTime() - 36000000);
+            Date dataTermino = new Date();
+
+            try {
+                dataInicio = sdf.parse(inicio.getText().toString());
+                dataTermino = sdf.parse(termino.getText().toString());
+
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            HistoricoService.listarHistoricos(inflater.getContext(), dataInicio, dataTermino, dispositivos);
+        }
+        super.setMenuVisibility(menuVisible);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.inflater = inflater;
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_historico, container, false);
 
@@ -158,7 +177,7 @@ public class HistoricoFragment extends Fragment  implements SeekBar.OnSeekBarCha
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        setData(4, 5);
+        setData(dispositivos.size(), 5);
     }
 
     private void setData(int count, float range) {
@@ -169,9 +188,9 @@ public class HistoricoFragment extends Fragment  implements SeekBar.OnSeekBarCha
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
-        for (int i = 0; i < count ; i++) {
-            entries.add(new PieEntry((float) ((Math.random() * mult) + mult / 5),
-                    mParties[i % mParties.length],
+        for (Dispositivo dispositivo : dispositivos) {
+            entries.add(new PieEntry(dispositivo.getHistorico().getConsumoTotal(),
+                    dispositivo.getNome(),
                     getResources().getDrawable(R.drawable.icon)));
         }
 

@@ -17,6 +17,7 @@ public class Dispositivo implements Serializable {
     private List<Programacao> programacoes = new ArrayList<>();
     private List<Medicao> medicoes = new ArrayList<>();
     private ConfiguracaoDispositivo configuracaoDispositivo;
+    private Historico historico;
 
     public Dispositivo() {
 
@@ -30,10 +31,17 @@ public class Dispositivo implements Serializable {
         this.configuracaoDispositivo = new ConfiguracaoDispositivo(circuitoResponse.getConfiguracaoCircuito());
 
         List<Medicao> medicoes = new ArrayList<>();
-        for (MedicaoResponse medicaoResponse : circuitoResponse.getMedicoes()) {
-            medicoes.add(new Medicao(medicaoResponse));
+        if (circuitoResponse.getMedicoes() != null) {
+            for (MedicaoResponse medicaoResponse : circuitoResponse.getMedicoes()) {
+                medicoes.add(new Medicao(medicaoResponse));
+            }
         }
+
         this.medicoes = medicoes;
+        if (circuitoResponse.getHistoricoResponse() != null) {
+            this.historico = new Historico(circuitoResponse.getHistoricoResponse());
+        }
+
     }
 
     public Dispositivo(CircuitoDispositivoResponse circuitoResponse) {
@@ -100,5 +108,13 @@ public class Dispositivo implements Serializable {
 
     public void setConfiguracaoDispositivo(ConfiguracaoDispositivo configuracaoDispositivo) {
         this.configuracaoDispositivo = configuracaoDispositivo;
+    }
+
+    public Historico getHistorico() {
+        return historico;
+    }
+
+    public void setHistorico(Historico historico) {
+        this.historico = historico;
     }
 }
