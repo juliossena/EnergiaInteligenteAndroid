@@ -1,9 +1,9 @@
 package com.example.julio.energiainteligente.models;
 
-import com.example.julio.energiainteligente.modelResponse.CircuitoDispositivoResponse;
-import com.example.julio.energiainteligente.modelResponse.CircuitoResponse;
-import com.example.julio.energiainteligente.modelResponse.MedicaoResponse;
-import com.example.julio.energiainteligente.modelResponse.ProgramacaoResponse;
+import com.example.julio.energiainteligente.models.modelResponse.CircuitoDispositivoResponse;
+import com.example.julio.energiainteligente.models.modelResponse.CircuitoResponse;
+import com.example.julio.energiainteligente.models.modelResponse.MedicaoResponse;
+import com.example.julio.energiainteligente.models.modelResponse.ProgramacaoResponse;
 
 import java.io.Serializable;
 import java.util.ArrayList;

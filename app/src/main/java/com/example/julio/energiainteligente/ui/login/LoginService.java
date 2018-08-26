@@ -6,8 +6,8 @@ import android.content.SharedPreferences;
 import android.widget.Switch;
 
 import com.example.julio.energiainteligente.manager.LoginManagerInterface;
-import com.example.julio.energiainteligente.modelRequest.LoginRequest;
-import com.example.julio.energiainteligente.modelResponse.LoginResponse;
+import com.example.julio.energiainteligente.models.modelRequest.LoginRequest;
+import com.example.julio.energiainteligente.models.modelResponse.LoginResponse;
 import com.example.julio.energiainteligente.service.ServiceGenerator;
 import com.example.julio.energiainteligente.service.exceptions.FalhaInternetException;
 import com.example.julio.energiainteligente.service.exceptions.LoginException;

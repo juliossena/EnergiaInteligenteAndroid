@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,13 +12,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.julio.energiainteligente.R;
-import com.example.julio.energiainteligente.modelRequest.LoginRequest;
-import com.example.julio.energiainteligente.ui.home.HomeActivity;
+import com.example.julio.energiainteligente.models.modelRequest.LoginRequest;
 import com.example.julio.energiainteligente.ui.util.AlertMessage;
 import com.example.julio.energiainteligente.ui.util.HideKeyboard;
 import com.example.julio.energiainteligente.util.Constants;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.FirebaseInstanceIdService;
 
 public class LoginActivity extends Activity {
 

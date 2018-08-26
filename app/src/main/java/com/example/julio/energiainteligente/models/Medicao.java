@@ -1,8 +1,6 @@
 package com.example.julio.energiainteligente.models;
 
-import com.example.julio.energiainteligente.modelResponse.MedicaoResponse;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.example.julio.energiainteligente.models.modelResponse.MedicaoResponse;
 
 import java.util.Date;
 

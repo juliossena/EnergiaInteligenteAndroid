@@ -1,6 +1,6 @@
 package com.example.julio.energiainteligente.models;
 
-import com.example.julio.energiainteligente.modelResponse.ConfiguracaoCircuitoResponse;
+import com.example.julio.energiainteligente.models.modelResponse.ConfiguracaoCircuitoResponse;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.example.julio.energiainteligente.modelRequest;
+package com.example.julio.energiainteligente.models.modelRequest;
 
 public class LoginRequest {
 

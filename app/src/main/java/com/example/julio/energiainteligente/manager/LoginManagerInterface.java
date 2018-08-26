@@ -1,8 +1,8 @@
 package com.example.julio.energiainteligente.manager;
 
-import com.example.julio.energiainteligente.modelRequest.LoginRequest;
-import com.example.julio.energiainteligente.modelResponse.LoginResponse;
-import com.example.julio.energiainteligente.modelResponse.LogoffResponse;
+import com.example.julio.energiainteligente.models.modelRequest.LoginRequest;
+import com.example.julio.energiainteligente.models.modelResponse.LoginResponse;
+import com.example.julio.energiainteligente.models.modelResponse.LogoffResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

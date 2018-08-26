@@ -88,6 +88,13 @@ public class EditarDispositivoActivity extends AppCompatActivity {
             }
         });
 
+        btnSalvar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
     }
 
     private void findId() {

@@ -1,11 +1,8 @@
 package com.example.julio.energiainteligente.ui.home.atual;
 
-import android.util.Log;
-
 import com.example.julio.energiainteligente.manager.AtualManagerInterface;
-import com.example.julio.energiainteligente.modelResponse.CircuitoResponse;
+import com.example.julio.energiainteligente.models.modelResponse.CircuitoResponse;
 import com.example.julio.energiainteligente.models.Dispositivo;
-import com.example.julio.energiainteligente.models.Medicao;
 import com.example.julio.energiainteligente.service.ServiceGenerator;
 
 import java.util.ArrayList;

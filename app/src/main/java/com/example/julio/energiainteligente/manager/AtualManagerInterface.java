@@ -1,6 +1,6 @@
 package com.example.julio.energiainteligente.manager;
 
-import com.example.julio.energiainteligente.modelResponse.CircuitoResponse;
+import com.example.julio.energiainteligente.models.modelResponse.CircuitoResponse;
 
 import java.util.List;
 

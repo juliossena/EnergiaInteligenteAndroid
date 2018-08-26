@@ -1,10 +1,9 @@
-package com.example.julio.energiainteligente.modelResponse;
+package com.example.julio.energiainteligente.models.modelResponse;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CircuitoResponse {
 
