@@ -16,6 +16,7 @@ public class ProgramacaoMudancaRequest {
     private Date horario;
     private Integer raio;
     private List<ProgramacaoMudancaRepetirRequest> repeticoes;
+    private boolean ligado;
 
     public ProgramacaoMudancaRequest() {
 
@@ -23,7 +24,8 @@ public class ProgramacaoMudancaRequest {
 
     public ProgramacaoMudancaRequest(TipoProgramacao tipoProgramacao, String nome, String type,
                                      boolean repetir, TipoEstado tipoEstado, Date horario,
-                                     Integer raio, List<ProgramacaoMudancaRepetirRequest> repeticoes) {
+                                     Integer raio, List<ProgramacaoMudancaRepetirRequest> repeticoes,
+                                     boolean ligado) {
         this.tipoProgramacao = tipoProgramacao.getCod();
         this.nome = nome;
         this.type = type;
@@ -32,6 +34,7 @@ public class ProgramacaoMudancaRequest {
         this.horario = horario;
         this.raio = raio;
         this.repeticoes = repeticoes;
+        this.ligado = ligado;
     }
 
     public Integer getTipoProgramacao() {
@@ -96,5 +99,13 @@ public class ProgramacaoMudancaRequest {
 
     public void setRepeticoes(List<ProgramacaoMudancaRepetirRequest> repeticoes) {
         this.repeticoes = repeticoes;
+    }
+
+    public boolean isLigado() {
+        return ligado;
+    }
+
+    public void setLigado(boolean ligado) {
+        this.ligado = ligado;
     }
 }

@@ -22,7 +22,11 @@ import com.example.julio.energiainteligente.models.modelRequest.ProgramacaoMudan
 import com.example.julio.energiainteligente.models.modelRequest.ProgramacaoMudancaRequest;
 import com.example.julio.energiainteligente.ui.util.AlertMessage;
 import com.example.julio.energiainteligente.util.Constants;
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -114,6 +118,14 @@ public class NovaProgramacaoActivity extends AppCompatActivity {
                     List<ProgramacaoMudancaRepetirRequest> programacaoMudancaRepetirRequest = new ArrayList<>();
                     setListaSemanaArray(programacaoMudancaRepetirRequest);
 
+                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH-mm-ss");
+                    Date horarioMarcado = new Date();
+                    try {
+                        horarioMarcado = format.parse(horarioProgramacao.getText().toString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
                     ProgramacaoMudancaRequest programacaoMudancaRequest =
                             new ProgramacaoMudancaRequest(
                                     TipoProgramacao.MUDANCA,
@@ -121,9 +133,10 @@ public class NovaProgramacaoActivity extends AppCompatActivity {
                                     TipoType.PROGRAMACAO_MUDANCA.getDescricao(),
                                     programacaoMudancaRepetirRequest.size() > 0,
                                     ligarDispositivo.isActivated() ? TipoEstado.LIGADO : TipoEstado.DESLIGADO,
-                                    horario.isActivated() ? new Date(horarioProgramacao.getText().toString()) : null,
+                                    horario.isActivated() ? horarioMarcado : null,
                                     proximidade.isActivated() ? Integer.parseInt(distanciaText.getText().toString()) : null,
-                                    programacaoMudancaRepetirRequest
+                                    programacaoMudancaRepetirRequest,
+                                    true
                             );
 
                     DispositivoService.inserirProgramacaoMudanca(NovaProgramacaoActivity.this,
@@ -132,6 +145,11 @@ public class NovaProgramacaoActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //Mascara Data
+        SimpleMaskFormatter smf = new SimpleMaskFormatter("NN/NN/NNNN NN:NN:NN");
+        MaskTextWatcher mtw = new MaskTextWatcher(horarioProgramacao, smf);
+        horarioProgramacao.addTextChangedListener(mtw);
     }
 
     private void setListaSemanaArray(List<ProgramacaoMudancaRepetirRequest> programacaoMudancaRepetirRequest) {
