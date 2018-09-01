@@ -11,7 +11,7 @@ public class AlertMessage {
     private static AlertDialog.Builder dialog;
 
     public static void showMessage(Context context, String message, String title) {
-        dialog = new AlertDialog.Builder(context);
+        dialog = new AlertDialog.Builder(context, R.style.Sphinx);
 
         dialog.setTitle(title);
 

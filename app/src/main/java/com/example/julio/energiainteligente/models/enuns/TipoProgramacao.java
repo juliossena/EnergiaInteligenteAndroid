@@ -35,4 +35,18 @@ public enum TipoProgramacao {
 
 		throw new IllegalArgumentException("Id inválido: " + cod);
 	}
+
+	public static TipoProgramacao toEnum(String mensagem) {
+		if (mensagem == null || mensagem == "") {
+			return null;
+		}
+
+		for (TipoProgramacao x : TipoProgramacao.values()) {
+			if (mensagem.equals(x.name())) {
+				return x;
+			}
+		}
+
+		throw new IllegalArgumentException("Id inválido: " + mensagem);
+	}
 }

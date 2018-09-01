@@ -13,7 +13,7 @@ public class ProgramacaoMudancaRequest {
     private String type;
     private boolean repetir;
     private Integer tipoEstado;
-    private Date horario;
+    private Long horario;
     private Integer raio;
     private List<ProgramacaoMudancaRepetirRequest> repeticoes;
     private boolean ligado;
@@ -31,7 +31,7 @@ public class ProgramacaoMudancaRequest {
         this.type = type;
         this.repetir = repetir;
         this.tipoEstado = tipoEstado.getCod();
-        this.horario = horario;
+        this.horario = horario != null ? horario.getTime() : null;
         this.raio = raio;
         this.repeticoes = repeticoes;
         this.ligado = ligado;
@@ -78,11 +78,11 @@ public class ProgramacaoMudancaRequest {
     }
 
     public Date getHorario() {
-        return horario;
+        return new Date(horario);
     }
 
     public void setHorario(Date horario) {
-        this.horario = horario;
+        this.horario = horario.getTime();
     }
 
     public Integer getRaio() {

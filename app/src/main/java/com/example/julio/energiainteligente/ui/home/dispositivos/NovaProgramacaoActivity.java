@@ -118,7 +118,7 @@ public class NovaProgramacaoActivity extends AppCompatActivity {
                     List<ProgramacaoMudancaRepetirRequest> programacaoMudancaRepetirRequest = new ArrayList<>();
                     setListaSemanaArray(programacaoMudancaRepetirRequest);
 
-                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH-mm-ss");
+                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     Date horarioMarcado = new Date();
                     try {
                         horarioMarcado = format.parse(horarioProgramacao.getText().toString());
@@ -133,7 +133,7 @@ public class NovaProgramacaoActivity extends AppCompatActivity {
                                     TipoType.PROGRAMACAO_MUDANCA.getDescricao(),
                                     programacaoMudancaRepetirRequest.size() > 0,
                                     ligarDispositivo.isActivated() ? TipoEstado.LIGADO : TipoEstado.DESLIGADO,
-                                    horario.isActivated() ? horarioMarcado : null,
+                                    horario.isActivated() ? horarioMarcado : horarioMarcado,
                                     proximidade.isActivated() ? Integer.parseInt(distanciaText.getText().toString()) : null,
                                     programacaoMudancaRepetirRequest,
                                     true

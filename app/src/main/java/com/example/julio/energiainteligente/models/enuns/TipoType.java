@@ -35,4 +35,18 @@ public enum TipoType {
 
 		throw new IllegalArgumentException("Id inválido: " + cod);
 	}
+
+	public static TipoType toEnum(String mensagem) {
+		if (mensagem == null || mensagem == "") {
+			return null;
+		}
+
+		for (TipoType x : TipoType.values()) {
+			if (mensagem.equals(x.getDescricao())) {
+				return x;
+			}
+		}
+
+		throw new IllegalArgumentException("Id inválido: " + mensagem);
+	}
 }

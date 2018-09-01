@@ -1,21 +1,20 @@
 package com.example.julio.energiainteligente.ui.home.dispositivos;
 
 import android.app.Activity;
-import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.julio.energiainteligente.R;
-import com.example.julio.energiainteligente.models.Dispositivo;
 import com.example.julio.energiainteligente.models.Programacao;
+import com.example.julio.energiainteligente.models.enuns.TipoType;
+import com.example.julio.energiainteligente.ui.util.DateConversoes;
 
+
+import java.util.Date;
 import java.util.List;
 
 public class ProgramacaoAdapter extends BaseAdapter {
@@ -54,9 +53,28 @@ public class ProgramacaoAdapter extends BaseAdapter {
         TextView tipoProgramacao = (TextView) viewAdapter.findViewById(R.id.item_programacao_adapter_tipo);
         ImageView btnExcluir = (ImageView) viewAdapter.findViewById(R.id.item_programacao_adapter_excluir);
 
-        nomeProgramacao.setText("Dispositivo 1");
-        proximaProgramacao.setText("Proxima programacao");
-        tipoProgramacao.setText("Mais um moc");
+        proximaProgramacao.setText("");
+        if(programacao.getHorario() != null) {
+            proximaProgramacao.setText(DateConversoes.dataBR(programacao.getHorario()));
+            if(programacao.getHorario().getTime() > new Date().getTime()) {
+                if(programacao.getHorario().getDate() == new Date().getDate()) {
+                    Integer tempoRestante = DateConversoes.diferencaMinutos(programacao.getHorario(), new Date());
+                    proximaProgramacao.setText("Em " + tempoRestante + " minutos");
+                }
+            }
+
+        }
+        nomeProgramacao.setText(programacao.getNome());
+
+        tipoProgramacao.setText("");
+        if(programacao.getType().equals(TipoType.PROGRAMACAO_ESTADO)) {
+            tipoProgramacao.setText("Alerta Mudança de Estado");
+        } else if(programacao.getType().equals(TipoType.PROGRAMACAO_EXCEDENTE)) {
+            tipoProgramacao.setText("Alerta Faixa de Consumo");
+        } else if(programacao.getType().equals(TipoType.PROGRAMACAO_MUDANCA)) {
+            tipoProgramacao.setText("Mudar estado");
+        }
+
 
         btnExcluir.setOnClickListener(new View.OnClickListener() {
             @Override
