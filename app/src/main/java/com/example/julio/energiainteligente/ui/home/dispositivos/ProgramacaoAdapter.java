@@ -1,6 +1,8 @@
 package com.example.julio.energiainteligente.ui.home.dispositivos;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import com.example.julio.energiainteligente.R;
 import com.example.julio.energiainteligente.models.Programacao;
 import com.example.julio.energiainteligente.models.enuns.TipoType;
 import com.example.julio.energiainteligente.ui.util.DateConversoes;
+import com.example.julio.energiainteligente.util.Constants;
 
 
 import java.util.Date;
@@ -46,7 +49,7 @@ public class ProgramacaoAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         View viewAdapter = act.getLayoutInflater().inflate(R.layout.item_programacao_adapter, viewGroup, false);
 
-        Programacao programacao = programacaos.get(i);
+        final Programacao programacao = programacaos.get(i);
 
         TextView nomeProgramacao = (TextView) viewAdapter.findViewById(R.id.item_programacao_adapter_nome_programacao);
         TextView proximaProgramacao = (TextView) viewAdapter.findViewById(R.id.item_programacao_adapter_proxima);
@@ -79,7 +82,26 @@ public class ProgramacaoAdapter extends BaseAdapter {
         btnExcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("foi", "foi");
+                AlertDialog.Builder dialog = new AlertDialog.Builder(act, R.style.Sphinx);
+                dialog.setTitle(Constants.Alert.atencao);
+                dialog.setMessage(Constants.Alert.desejaExcluir);
+                dialog.setCancelable(false);
+                dialog.setPositiveButton("Sim",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                DispositivoService.deletarProgramacao(act, programacao);
+                            }
+                        });
+                dialog.setNegativeButton("Não",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        });
+                dialog.create();
+                dialog.show();
+
             }
         });
 

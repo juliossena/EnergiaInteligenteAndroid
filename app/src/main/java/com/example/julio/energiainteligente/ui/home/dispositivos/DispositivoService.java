@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.example.julio.energiainteligente.manager.DispositivosManagerInterface;
+import com.example.julio.energiainteligente.models.Programacao;
 import com.example.julio.energiainteligente.models.modelRequest.CircuitoRequest;
 import com.example.julio.energiainteligente.models.modelRequest.ProgramacaoMudancaRequest;
 import com.example.julio.energiainteligente.models.modelResponse.CircuitoDispositivoResponse;
@@ -149,9 +150,7 @@ public class DispositivoService {
 
                 try {
                     if (response.code() == 200) {
-
-                        AlertMessage.showMessage(activity, Constants.Alert.programacaoInserida, Constants.Alert.sucesso);
-                        activity.finish();
+                        AlertMessage.showMessageFinish(activity, Constants.Alert.programacaoInserida, Constants.Alert.sucesso);
 
                     }else if (response.code() == 403) {
 
@@ -176,6 +175,47 @@ public class DispositivoService {
 
             @Override
             public void onFailure(Call<CircuitoResponse> call, Throwable t) {
+                LoadingOverlay.getInstance(activity).hideLoading();
+                try {
+
+                    throw new FalhaInternetException(Constants.Alert.falhaInternet);
+
+                } catch (FalhaInternetException e) {
+
+                    AlertMessage.showMessage(activity, e.getMessage(), Constants.Alert.atencao);
+
+                }
+            }
+        });
+    }
+
+    public static void deletarProgramacao(final Activity activity, Programacao programacao){
+        DispositivosManagerInterface dispositivosManagerInterface =
+                ServiceGenerator.createService(DispositivosManagerInterface.class);
+        LoadingOverlay.getInstance(activity).showLoading();
+
+        dispositivosManagerInterface.deletarProgramacao(programacao.getId()).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                LoadingOverlay.getInstance(activity).hideLoading();
+                if (response.code() == 204) {
+                    AlertMessage.showMessageFinish(activity, Constants.Alert.programacaoDeletada, Constants.Alert.sucesso);
+                } else {
+                    try {
+
+                        throw new FalhaInternetException(Constants.Alert.falhaInternet);
+
+                    } catch (FalhaInternetException e) {
+
+                        AlertMessage.showMessage(activity, e.getMessage(), Constants.Alert.atencao);
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
                 LoadingOverlay.getInstance(activity).hideLoading();
                 try {
 

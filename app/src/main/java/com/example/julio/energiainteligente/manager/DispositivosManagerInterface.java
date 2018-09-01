@@ -9,6 +9,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -24,5 +25,8 @@ public interface DispositivosManagerInterface {
 
     @POST("programacao/2/{idCircuito}")
     Call<CircuitoResponse> inserirProgramacaoMudanca(@Body ProgramacaoMudancaRequest programacaoMudancaRequest, @Path("idCircuito") Integer idCircuito);
+
+    @DELETE("programacao/{idProgramacao}")
+    Call<String> deletarProgramacao(@Path("idProgramacao") Integer idProgramacao);
 
 }

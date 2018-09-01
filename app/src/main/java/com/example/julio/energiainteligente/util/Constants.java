@@ -21,6 +21,8 @@ public class Constants {
         public static String usuarioDeslogado = "Erro na autentificação do usuário, tente refazer o login";
         public static String falhaInternet = "Não foi possível fazer a conexão, confira seu acesso à internet e tente novamente mais tarde";
         public static String programacaoInserida = "Programação inserida com sucesso!";
+        public static String programacaoDeletada = "Programação deletada com sucesso!";
+        public static String desejaExcluir = "Tem certeza que deseja excluir?";
     }
 
     public static class Session {
