@@ -6,6 +6,7 @@ import android.content.Context;
 import com.example.julio.energiainteligente.manager.DispositivosManagerInterface;
 import com.example.julio.energiainteligente.models.Programacao;
 import com.example.julio.energiainteligente.models.modelRequest.CircuitoRequest;
+import com.example.julio.energiainteligente.models.modelRequest.ProgramacaoExcedenteRequest;
 import com.example.julio.energiainteligente.models.modelRequest.ProgramacaoMudancaRequest;
 import com.example.julio.energiainteligente.models.modelResponse.CircuitoDispositivoResponse;
 import com.example.julio.energiainteligente.models.modelResponse.CircuitoResponse;
@@ -216,6 +217,58 @@ public class DispositivoService {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
+                LoadingOverlay.getInstance(activity).hideLoading();
+                try {
+
+                    throw new FalhaInternetException(Constants.Alert.falhaInternet);
+
+                } catch (FalhaInternetException e) {
+
+                    AlertMessage.showMessage(activity, e.getMessage(), Constants.Alert.atencao);
+
+                }
+            }
+        });
+    }
+
+    public static void inserirProgramacaoExcesso(final Activity activity, ProgramacaoExcedenteRequest programacao, Dispositivo dispositivo) {
+        DispositivosManagerInterface dispositivosManagerInterface =
+                ServiceGenerator.createService(DispositivosManagerInterface.class);
+
+        LoadingOverlay.getInstance(activity).showLoading();
+
+        dispositivosManagerInterface.inserirProgramacaoExcedente(programacao, dispositivo.getId()).enqueue(new Callback<CircuitoResponse>() {
+            @Override
+            public void onResponse(Call<CircuitoResponse> call, Response<CircuitoResponse> response) {
+                LoadingOverlay.getInstance(activity).hideLoading();
+
+                try {
+                    if (response.code() == 200) {
+                        AlertMessage.showMessageFinish(activity, Constants.Alert.programacaoInserida, Constants.Alert.sucesso);
+
+                    }else if (response.code() == 403) {
+
+                        throw new LoginException(Constants.Alert.usuarioDeslogado);
+
+                    } else {
+
+                        throw new FalhaInternetException(Constants.Alert.falhaInternet);
+
+                    }
+
+                } catch (LoginException e) {
+
+                    AlertMessage.showMessage(activity, e.getMessage(), Constants.Alert.atencao);
+
+                } catch (FalhaInternetException e) {
+
+                    AlertMessage.showMessage(activity, e.getMessage(), Constants.Alert.atencao);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CircuitoResponse> call, Throwable t) {
                 LoadingOverlay.getInstance(activity).hideLoading();
                 try {
 

@@ -11,6 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service android:name=".service.MyFirebaseIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.MyFirebaseMessaging">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".ui.SplashActivity"
             android:screenOrientation="portrait">
@@ -31,23 +42,15 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.dispositivos.EditarDispositivoActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.dispositivos.NovaProgramacaoActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-
-        <service android:name=".service.MyFirebaseIdService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
-
-        <service android:name=".service.MyFirebaseMessaging">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.dispositivos.TipoNovaProgramacaoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Transparent" />
+        <activity android:name=".ui.home.dispositivos.NovoAlertaActivity"></activity>
     </application>
 
 </manifest>

@@ -94,8 +94,6 @@ public class DispositivoFragment extends Fragment {
         return view;
     }
 
-
-
     private void findId(View view) {
         tabela = view.findViewById(R.id.fragment_dispositivo_lista);
     }

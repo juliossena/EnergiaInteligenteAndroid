@@ -66,7 +66,7 @@ public class EditarDispositivoActivity extends AppCompatActivity {
         btnAdicionarProgramacao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EditarDispositivoActivity.this, NovaProgramacaoActivity.class);
+                Intent intent = new Intent(EditarDispositivoActivity.this, TipoNovaProgramacaoActivity.class);
                 intent.putExtra(Constants.Cache.passarDispositivo, dispositivo);
 
                 startActivity(intent);

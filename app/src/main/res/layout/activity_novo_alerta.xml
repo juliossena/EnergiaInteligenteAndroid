@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_app"
+    tools:context=".ui.home.dispositivos.NovoAlertaActivity">
+
+    <include
+        android:id="@+id/activity_novo_alerta_toolbar"
+        layout="@layout/toolbar" />
+
+    <EditText
+        android:id="@+id/activity_novo_alerta_nova_programacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="104dp"
+        android:background="@drawable/edit_text_arredondado"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Nome Programacao"
+        android:inputType="textPersonName" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="167dp">
+
+        <RadioButton
+            android:id="@+id/activity_novo_alerta_radio_mudanca_estado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Mudança de estado" />
+
+        <RadioButton
+            android:id="@+id/activity_novo_alerta_radio_excesso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Excesso / Baixo consumo" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="247dp" >
+
+        <RadioButton
+            android:id="@+id/activity_novo_alerta_excesso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Alertar quando estiver excedendo"
+            android:visibility="invisible" />
+
+        <RadioButton
+            android:id="@+id/activity_novo_alerta_abaixo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Alertar quando estiver abaixo"
+            android:visibility="invisible" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/activity_novo_alerta_watts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="202dp"
+        android:background="@drawable/edit_text_arredondado"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Consumo em watts"
+        android:inputType="textPersonName|numberSigned"
+        android:visibility="invisible" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="114dp">
+
+        <RadioButton
+            android:id="@+id/activity_novo_alerta_ligar_dispositivo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Alertar quando ligar o dispositivo"
+            android:visibility="invisible" />
+
+        <RadioButton
+            android:id="@+id/activity_novo_alerta_desligar_dispositivo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Alertar quando desligar o dispositivo"
+            android:visibility="invisible" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/activity_novo_alerta_salvar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/botao_arredondado_verde"
+        android:text="@string/Salvar" />
+</RelativeLayout>

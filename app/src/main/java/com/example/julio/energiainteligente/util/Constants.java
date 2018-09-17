@@ -17,6 +17,7 @@ public class Constants {
         public static String sucesso = "SUCESSO!";
         public static String preencherCampos = "Preencha todos os campos";
         public static String novaProgramacao = "Nova Programação";
+        public static String novoAlerta = "Novo Alerta";
         public static String usuarioSenhaInvalido = "Usuário ou senha inválidos";
         public static String usuarioDeslogado = "Erro na autentificação do usuário, tente refazer o login";
         public static String falhaInternet = "Não foi possível fazer a conexão, confira seu acesso à internet e tente novamente mais tarde";
@@ -33,6 +34,6 @@ public class Constants {
     }
 
     public static class Build {
-        public static String endPoint = "https://energia-inteligente.herokuapp.com/";
+        public static String endPoint = "https://energiainteligente.herokuapp.com/";
     }
 }

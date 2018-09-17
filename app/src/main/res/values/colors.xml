@@ -8,5 +8,6 @@
     <color name="verde_escuro">#253e2c</color>
     <color name="vermelho_escuro">#870102</color>
     <color name="vermelho_claro">#F2797E</color>
-    <color name="amarelo">#FFF100</color>
+    <color name="amarelo">#fff100</color>
+    <color name="colorDefaultTransparent">#50000000</color>
 </resources>

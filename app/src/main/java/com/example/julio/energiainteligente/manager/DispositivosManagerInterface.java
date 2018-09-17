@@ -1,6 +1,7 @@
 package com.example.julio.energiainteligente.manager;
 
 import com.example.julio.energiainteligente.models.modelRequest.CircuitoRequest;
+import com.example.julio.energiainteligente.models.modelRequest.ProgramacaoExcedenteRequest;
 import com.example.julio.energiainteligente.models.modelRequest.ProgramacaoMudancaRequest;
 import com.example.julio.energiainteligente.models.modelResponse.CircuitoDispositivoResponse;
 import com.example.julio.energiainteligente.models.modelResponse.CircuitoResponse;
@@ -25,6 +26,9 @@ public interface DispositivosManagerInterface {
 
     @POST("programacao/2/{idCircuito}")
     Call<CircuitoResponse> inserirProgramacaoMudanca(@Body ProgramacaoMudancaRequest programacaoMudancaRequest, @Path("idCircuito") Integer idCircuito);
+
+    @POST("programacao/{idCircuito}")
+    Call<CircuitoResponse> inserirProgramacaoExcedente(@Body ProgramacaoExcedenteRequest programacaoExcedenteRequest, @Path("idCircuito") Integer idCircuito);
 
     @DELETE("programacao/{idProgramacao}")
     Call<String> deletarProgramacao(@Path("idProgramacao") Integer idProgramacao);

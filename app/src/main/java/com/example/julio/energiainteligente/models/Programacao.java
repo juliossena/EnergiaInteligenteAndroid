@@ -34,8 +34,9 @@ public class Programacao implements Serializable{
         this.ultimaRequisicao = programacaoResponse.getUltimaRequisicao() != null ?
                 new Date(programacaoResponse.getUltimaRequisicao()) : null;
         this.repetir = programacaoResponse.isRepetir();
-        this.tipoEstado = TipoEstado.toEnum(programacaoResponse.getTipoEstado()).getCod();
-        this.horario = new Date(programacaoResponse.getHorario());
+        this.tipoEstado = programacaoResponse.getTipoEstado() != null ? TipoEstado.toEnum(programacaoResponse.getTipoEstado()).getCod() :
+                null;
+        this.horario = programacaoResponse.getHorario() != null ? new Date(programacaoResponse.getHorario()) : null;
         this.raio = programacaoResponse.getRaio();
     }
 
