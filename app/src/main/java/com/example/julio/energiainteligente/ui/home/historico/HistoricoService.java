@@ -41,6 +41,8 @@ public class HistoricoService {
                             dispositivos.add(new Dispositivo(circuitoResponse));
                         }
 
+                        HistoricoFragment.atualizarDados(dispositivos);
+
                     }else if (response.code() == 403) {
 
                         throw new LoginException(Constants.Alert.usuarioDeslogado);

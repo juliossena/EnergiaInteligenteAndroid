@@ -14,6 +14,7 @@ public class ProgramacaoExcedenteRequest {
     private String type;
     private Integer tipoExcedente;
     private float potencia;
+    private boolean ligado = true;
 
     public ProgramacaoExcedenteRequest() {
 
@@ -65,5 +66,13 @@ public class ProgramacaoExcedenteRequest {
 
     public void setPotencia(float potencia) {
         this.potencia = potencia;
+    }
+
+    public boolean isLigado() {
+        return ligado;
+    }
+
+    public void setLigado(boolean ligado) {
+        this.ligado = ligado;
     }
 }

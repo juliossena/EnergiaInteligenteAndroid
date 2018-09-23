@@ -29,7 +29,7 @@ public class Historico {
     public Historico(HistoricoResponse historicoResponse) {
         this.consumoTotal = historicoResponse.getConsumoTotal();
         this.mediaConsumo = historicoResponse.getMediaConsumo();
-        this.horarioPico = new Date(historicoResponse.getHorarioPico());
+        this.horarioPico = historicoResponse.getHorarioPico() != null ? new Date(historicoResponse.getHorarioPico()) : null;
         this.consumoPico = historicoResponse.getConsumoPico();
         this.consumoReais = historicoResponse.getConsumoReais();
     }

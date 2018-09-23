@@ -3,6 +3,7 @@ package com.example.julio.energiainteligente.service;
 import com.example.julio.energiainteligente.util.Constants;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -21,7 +22,9 @@ public class ServiceGenerator {
 
     public static <S> S createService(final Class<S> serviceClass) {
 
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS);
 
         httpClient.addInterceptor(new Interceptor() {
             @Override
@@ -37,14 +40,11 @@ public class ServiceGenerator {
             }
         });
 
-
         OkHttpClient client = httpClient.build();
 
         Retrofit retrofit = builder.client(client).build();
         return retrofit.create(serviceClass);
 
-
     }
-
 
 }

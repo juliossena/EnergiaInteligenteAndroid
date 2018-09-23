@@ -26,6 +26,7 @@ import com.example.julio.energiainteligente.R;
 import com.example.julio.energiainteligente.models.Dispositivo;
 import com.example.julio.energiainteligente.models.Historico;
 import com.example.julio.energiainteligente.ui.home.dispositivos.DispositivoService;
+import com.example.julio.energiainteligente.util.Utils;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -48,9 +49,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class HistoricoFragment extends Fragment  implements SeekBar.OnSeekBarChangeListener,
         OnChartValueSelectedListener {
 
@@ -63,6 +61,11 @@ public class HistoricoFragment extends Fragment  implements SeekBar.OnSeekBarCha
     protected Typeface mTfRegular;
     protected Typeface mTfLight;
 
+    private static TextView consumoTotal;
+    private static TextView mediaConsumo;
+    private static TextView horarioPico;
+    private static TextView consumoPico;
+    private static TextView consumoReais;
 
     protected float getRandom(float range, float startsfrom) {
         return (float) (Math.random() * range) + startsfrom;
@@ -75,23 +78,51 @@ public class HistoricoFragment extends Fragment  implements SeekBar.OnSeekBarCha
     @Override
     public void setMenuVisibility(boolean menuVisible) {
         if (menuVisible) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/aaaa HH:mm:ss");
-
-            Date dataInicio = new Date(new Date().getTime() - 36000000);
+            Date dataInicio = new Date(new Date().getTime() - 604800000);
             Date dataTermino = new Date();
 
+            inicio.setText(Utils.dataHoraBrasil().format(dataInicio));
+            termino.setText(Utils.dataHoraBrasil().format(dataTermino));
+
             try {
-                dataInicio = sdf.parse(inicio.getText().toString());
-                dataTermino = sdf.parse(termino.getText().toString());
+                dataInicio = Utils.dataHoraBrasil().parse(inicio.getText().toString());
+                dataTermino = Utils.dataHoraBrasil().parse(termino.getText().toString());
 
 
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
+            dispositivos = new ArrayList<>();
             HistoricoService.listarHistoricos(inflater.getContext(), dataInicio, dataTermino, dispositivos);
         }
         super.setMenuVisibility(menuVisible);
+    }
+
+    public static void atualizarDados(List<Dispositivo> dispositivos) {
+        Historico historico = new Historico();
+        historico.setHorarioPico(new Date());
+        float somaMediaConsumo = (float) 0.0;
+
+        for (Dispositivo dispositivo : dispositivos) {
+            if (historico.getConsumoPico() < dispositivo.getHistorico().getConsumoPico()) {
+                historico.setConsumoPico(dispositivo.getHistorico().getConsumoPico());
+            }
+            historico.setConsumoReais(dispositivo.getHistorico().getConsumoReais() + historico.getConsumoReais());
+            historico.setConsumoTotal(dispositivo.getHistorico().getConsumoTotal() + historico.getConsumoTotal());
+            if (historico.getConsumoPico() == dispositivo.getHistorico().getConsumoPico()) {
+                historico.setHorarioPico(dispositivo.getHistorico().getHorarioPico());
+            }
+
+
+            somaMediaConsumo = dispositivo.getHistorico().getMediaConsumo();
+        }
+        historico.setMediaConsumo(somaMediaConsumo / dispositivos.size());
+
+        consumoTotal.setText(historico.getConsumoTotal() + "");
+        mediaConsumo.setText(historico.getMediaConsumo() + "");
+        horarioPico.setText(Utils.dataHoraBrasil().format(historico.getHorarioPico()));
+        consumoPico.setText(historico.getConsumoPico() + "");
+        consumoReais.setText(historico.getConsumoReais() + "");
     }
 
     @Override
@@ -279,6 +310,12 @@ public class HistoricoFragment extends Fragment  implements SeekBar.OnSeekBarCha
     private void findId(View view) {
         inicio = (EditText) view.findViewById(R.id.fragment_historico_inicio);
         termino = (EditText) view.findViewById(R.id.fragment_historico_termino);
+
+        consumoTotal = (TextView) view.findViewById(R.id.fragment_historico_consumo_total);
+        mediaConsumo = (TextView) view.findViewById(R.id.fragment_historico_media_consumo);
+        horarioPico = (TextView) view.findViewById(R.id.fragment_historico_horario_pico);
+        consumoPico = (TextView) view.findViewById(R.id.fragment_historico_consumo_pico);
+        consumoReais = (TextView) view.findViewById(R.id.fragment_historico_consumo_reais);
     }
 
 }
