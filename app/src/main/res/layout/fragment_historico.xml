@@ -35,7 +35,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="Inicio" />
+                        android:text="Data de Inicio"
+                        android:textColor="@color/colorAccent" />
 
                     <EditText
                         android:id="@+id/fragment_historico_inicio"
@@ -61,7 +62,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="Término" />
+                        android:text="Data de Término"
+                        android:textColor="@color/colorAccent" />
 
                     <EditText
                         android:id="@+id/fragment_historico_termino"
@@ -77,7 +79,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/fragment_historico_atualizar"
                 android:layout_width="150dp"
                 android:layout_height="30dp"
                 android:layout_margin="10dp"

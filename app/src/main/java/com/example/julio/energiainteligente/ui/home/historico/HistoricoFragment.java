@@ -49,6 +49,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.internal.Util;
+
 public class HistoricoFragment extends Fragment  implements SeekBar.OnSeekBarChangeListener,
         OnChartValueSelectedListener {
 
@@ -57,6 +59,7 @@ public class HistoricoFragment extends Fragment  implements SeekBar.OnSeekBarCha
     private EditText termino;
     private LayoutInflater inflater;
     private List<Dispositivo> dispositivos = new ArrayList<>();
+    private Button atualizar;
 
     protected Typeface mTfRegular;
     protected Typeface mTfLight;
@@ -93,7 +96,7 @@ public class HistoricoFragment extends Fragment  implements SeekBar.OnSeekBarCha
                 e.printStackTrace();
             }
             dispositivos = new ArrayList<>();
-            HistoricoService.listarHistoricos(inflater.getContext(), dataInicio, dataTermino, dispositivos);
+            HistoricoService.listarHistoricos(inflater.getContext(), dataInicio, dataTermino, dispositivos, mTfLight, mChart);
         }
         super.setMenuVisibility(menuVisible);
     }
@@ -118,11 +121,12 @@ public class HistoricoFragment extends Fragment  implements SeekBar.OnSeekBarCha
         }
         historico.setMediaConsumo(somaMediaConsumo / dispositivos.size());
 
-        consumoTotal.setText(historico.getConsumoTotal() + "");
-        mediaConsumo.setText(historico.getMediaConsumo() + "");
+        consumoTotal.setText(Utils.decimalFormat().format(historico.getConsumoTotal()) + " Watts");
+        mediaConsumo.setText(Utils.decimalFormat().format(historico.getMediaConsumo()) + " Watts/h");
         horarioPico.setText(Utils.dataHoraBrasil().format(historico.getHorarioPico()));
-        consumoPico.setText(historico.getConsumoPico() + "");
-        consumoReais.setText(historico.getConsumoReais() + "");
+        consumoPico.setText(Utils.decimalFormat().format(historico.getConsumoPico()) + " Watts/h");
+        consumoReais.setText("R$: " + Utils.decimalFormat().format(historico.getConsumoReais()));
+
     }
 
     @Override
@@ -133,6 +137,23 @@ public class HistoricoFragment extends Fragment  implements SeekBar.OnSeekBarCha
         View view = inflater.inflate(R.layout.fragment_historico, container, false);
 
         findId(view);
+
+        atualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String dataInicio = inicio.getText().toString();
+                final String dateTermino = termino.getText().toString();
+                dispositivos = new ArrayList<>();
+                try {
+                    HistoricoService.listarHistoricos(HistoricoFragment.this.getContext(),
+                            Utils.dataHoraBrasil().parse(dataInicio),
+                            Utils.dataHoraBrasil().parse(dateTermino),
+                            dispositivos, mTfLight, mChart);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         //Mascara Data
         SimpleMaskFormatter smf = new SimpleMaskFormatter("NN/NN/NNNN NN:NN:NN");
@@ -181,8 +202,6 @@ public class HistoricoFragment extends Fragment  implements SeekBar.OnSeekBarCha
         // add a selection listener
         mChart.setOnChartValueSelectedListener(this);
 
-        setData(4, 100);
-
         //mChart.animateY(1400, Easing.EaseInOutQuad);
         // mChart.spin(2000, 0, 360);
 
@@ -208,67 +227,8 @@ public class HistoricoFragment extends Fragment  implements SeekBar.OnSeekBarCha
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        setData(dispositivos.size(), 5);
     }
 
-    private void setData(int count, float range) {
-
-        float mult = range;
-
-        ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
-
-        // NOTE: The order of the entries when being added to the entries array determines their position around the center of
-        // the chart.
-        for (Dispositivo dispositivo : dispositivos) {
-            entries.add(new PieEntry(dispositivo.getHistorico().getConsumoTotal(),
-                    dispositivo.getNome(),
-                    getResources().getDrawable(R.drawable.icon)));
-        }
-
-        PieDataSet dataSet = new PieDataSet(entries, "Legenda");
-
-        dataSet.setDrawIcons(false);
-
-        dataSet.setSliceSpace(3f);
-        dataSet.setIconsOffset(new MPPointF(0, 40));
-        dataSet.setSelectionShift(5f);
-
-        // add a lot of colors
-
-        ArrayList<Integer> colors = new ArrayList<Integer>();
-
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-
-        colors.add(ColorTemplate.getHoloBlue());
-
-        dataSet.setColors(colors);
-        //dataSet.setSelectionShift(0f);
-
-        PieData data = new PieData(dataSet);
-        data.setValueFormatter(new PercentFormatter());
-        data.setValueTextSize(11f);
-        data.setValueTextColor(Color.WHITE);
-        data.setValueTypeface(mTfLight);
-        mChart.setData(data);
-
-        // undo all highlights
-        mChart.highlightValues(null);
-
-        mChart.invalidate();
-    }
 
     private SpannableString generateCenterSpannableText() {
 
@@ -283,16 +243,15 @@ public class HistoricoFragment extends Fragment  implements SeekBar.OnSeekBarCha
     @Override
     public void onValueSelected(Entry e, Highlight h) {
 
-        if (e == null)
-            return;
-        Log.i("VAL SELECTED",
-                "Value: " + e.getY() + ", index: " + h.getX()
-                        + ", DataSet index: " + h.getDataSetIndex());
+        List<Dispositivo> dispositivos = new ArrayList<>();
+        dispositivos.add(this.dispositivos.get((int) h.getX()));
+        atualizarDados(dispositivos);
+
     }
 
     @Override
     public void onNothingSelected() {
-        Log.i("PieChart", "nothing selected");
+        atualizarDados(dispositivos);
     }
 
     @Override
@@ -310,7 +269,7 @@ public class HistoricoFragment extends Fragment  implements SeekBar.OnSeekBarCha
     private void findId(View view) {
         inicio = (EditText) view.findViewById(R.id.fragment_historico_inicio);
         termino = (EditText) view.findViewById(R.id.fragment_historico_termino);
-
+        atualizar = (Button) view.findViewById(R.id.fragment_historico_atualizar);
         consumoTotal = (TextView) view.findViewById(R.id.fragment_historico_consumo_total);
         mediaConsumo = (TextView) view.findViewById(R.id.fragment_historico_media_consumo);
         horarioPico = (TextView) view.findViewById(R.id.fragment_historico_horario_pico);
